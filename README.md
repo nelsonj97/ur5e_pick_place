@@ -92,24 +92,8 @@ ros2 run ur5e_golf_pick_place vision_based_pick_and_place
 
 ## 🏗️ System Architecture
 
-┌─────────────────────────────────────┐
-│         Application Layer                                                           │
-│   vision_based_pick_and_place.py                                       │
-└─────────────────┬───────────────────┘
-                  │
-    ┌─────────────┼─────────────┐
-    ▼                            ▼             ▼
-    VisionSystem      RobotArm    RobotGripper
-    (OpenCV/TF2)     (MoveIt2/IK) (Controllers)
-    │             │             │
-    └─────────────┼─────────────┘
-                  ▼
-            ROS2 Humble
-    (Topics/Services/Actions)
-                  │
-    ┌─────────────┼─────────────┐
-    ▼             ▼             ▼
-  Gazebo       MoveIt2     Controllers
+<img width="659" height="505" alt="Screenshot from 2026-02-28 01-37-18" src="https://github.com/user-attachments/assets/bd28cb16-e072-4236-a485-a4f0039434b4" />
+
 
 ## 📈 Performance Results
 
