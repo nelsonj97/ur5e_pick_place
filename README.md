@@ -48,7 +48,8 @@ without human intervention.
 ## 🎥 Demo Video
 
 ### Simulation Demo
-▶️ [Watch Full Demo Video](https://github.com/nelsonj97/ur5e_pick_place/releases/download/v1.0.0/simulation_demo.mp4)
+▶️ [Watch Full Demo Video](https://github.com/nelsonj97/ur5e_pick_place/releases/download/v1.0.0/ur_5e_Gazebo_Simulation_2.mp4)
+(https://github.com/nelsonj97/ur5e_pick_place/releases/download/v1.0.0/ur_5e_Gazebo_Simulation_1.mp4)
 
 ### What the Demo Shows
 
