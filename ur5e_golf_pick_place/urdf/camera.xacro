@@ -1,0 +1,126 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://wiki.ros.org/xacro">
+
+  <xacro:macro name="rgbd_camera" params="parent prefix *origin">
+    <!-- Optical frame link (sensor origin: standard ROS REP-103: Z forward, X right, Y down) -->
+    <link name="${prefix}camera_link" />
+
+    <!-- Fixed joint to attach to parent (e.g., robot link or world) -->
+    <joint name="${prefix}camera_joint" type="fixed">
+      <parent link="${parent}" />
+      <child link="${prefix}camera_link" />
+      <xacro:insert_block name="origin" />
+    </joint>
+
+    <!-- Visual + Collision link (Xtion Pro Live model) -->
+    <link name="${prefix}camera_body_link">
+      <!-- Textured visual using camera.dae (Collada supports xtion_pro_live.png texture) -->
+      <visual name="camera_visual">
+        <origin xyz="0 0 0" rpy="0 0 0"/>  <!-- Adjust if mesh origin needs offset -->
+        <geometry>
+          <!--<mesh filename="package://ur5e_golf_pick_place/meshes/sensors/camera/kinetic.stl" scale="0.001 0.001 0.001"/> -->
+          <!-- Fallback absolute path if package:// fails -->
+          <mesh filename="file://$(find ur5e_golf_pick_place)/meshes/sensors/camera/kinetic.stl" scale="0.001 0.001 0.001"/> 
+          <!-- DAE fallback (texture attempt; often fails in Gazebo) -->
+          <!-- <mesh filename="package://ur5e_golf_pick_place/meshes/sensors/camera/camera.dae" scale="0.001 0.001 0.001"/> -->
+        </geometry>
+      </visual>
+
+      <!-- Simple box collision for performance (cameras rarely collide precisely) -->
+      <collision name="camera_collision">
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.18 0.035 0.04"/>  <!-- Better match for real Xtion Pro Live dimensions -->
+        </geometry>
+        
+        <!-- Optional precise STL collision (uncomment; same scale) -->
+        <mesh filename="file://$(find ur5e_golf_pick_place)/meshes/sensors/camera/kinetic.stl" scale="0.001 0.001 0.001"/> 
+      </collision>
+
+      <!-- Minimal inertial (non-zero mass for stability) -->
+      <inertial>
+        <mass value="0.2"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+      </inertial>
+    </link>
+
+    <!-- Attach body (visual/collision) to optical frame -->
+    <joint name="${prefix}camera_body_joint" type="fixed">
+      <parent link="${prefix}camera_link"/>
+      <child link="${prefix}camera_body_link"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>  <!-- Adjust offset/rotation if mesh doesn't align with optical frame -->
+    </joint>
+
+    <!-- RGBD Sensor: type="depth" to enable depth rays (matches working overhead) -->
+    <gazebo reference="${prefix}camera_link">
+      <sensor name="${prefix}rgbd_sensor" type="depth">
+        <always_on>true</always_on>
+        <update_rate>15</update_rate>       <!-- Lower for moving camera -->
+        <visualize>true</visualize>
+
+        <camera>
+          <horizontal_fov>1.047</horizontal_fov>  <!-- ~60° horizontal FOV (typical for Xtion/Kinect-like) -->
+
+          <!-- Low res/rate for wrist (moving = high load) -->
+          <xacro:if value="${prefix == 'wrist_'}">
+            <image>
+              <width>320</width>
+              <height>240</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>3.0</far>
+            </clip>
+          </xacro:if>
+
+          <!-- High res/rate fallback (if used for overhead) -->
+          <xacro:unless value="${prefix == 'wrist_'}">
+            <image>
+              <width>640</width>
+              <height>480</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>10</far>
+            </clip>
+          </xacro:unless>
+        </camera>
+
+        <!-- Plugin Configuration -->
+        <plugin name="${prefix}rgbd_plugin" filename="libgazebo_ros_camera.so">
+          <ros>
+             <!-- Use dynamic namespace based on prefix -->
+            <namespace>/${prefix}camera</namespace>
+          </ros>
+
+          <!-- Camera name -->
+          <camera_name>${prefix}rgbd_sensor</camera_name>
+          
+          <!-- Frame name (optical frame) -->
+          <frame_name>${prefix}camera_link</frame_name>
+
+          <!-- RGB Image Topics -->
+          <image_topic_name>image_raw</image_topic_name>
+          <camera_info_topic_name>rgb/camera_info</camera_info_topic_name>
+
+          <!-- Depth Image Topics -->
+          <depth_image_topic_name>depth/image_raw</depth_image_topic_name>
+          <depth_image_camera_info_topic_name>depth/camera_info</depth_image_camera_info_topic_name>
+
+          <!-- Point Cloud Topic -->
+          <point_cloud_topic_name>depth/points</point_cloud_topic_name>
+          <point_cloud_cutoff>0.1</point_cloud_cutoff>
+          <point_cloud_cutoff_max>10.0</point_cloud_cutoff_max>
+
+          <!-- Hack to get depth working (Gazebo quirk) -->
+          <hack_baseline>0.07</hack_baseline>
+          
+        </plugin>
+      </sensor>
+    </gazebo>
+  </xacro:macro>
+
+</robot>

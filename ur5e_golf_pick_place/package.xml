@@ -1,35 +1,61 @@
 <?xml version="1.0"?>
-<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypeset="http://www.w3.org/2001/XMLSchema"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd"
+ schematypens="http://www.w3.org/2001/XMLSchema"?>
+
 <package format="3">
   <name>ur5e_golf_pick_place</name>
   <version>1.0.0</version>
-  <description>UR5e Golf Ball Pick and Place Task</description>
-  <maintainer email="shu.xiao@students.iaac.net">shu</maintainer>
-  <license>MIT</license>
-  <buildtool_depend>ament_cmake_python</buildtool_depend>
+  <description>UR5e with Robotiq gripper and camera for Golf Ball Pick and Place Task</description>
+
+  <maintainer email="nelsonjorvany@gmail.com">nelsonj</maintainer>
+  <license>Apache-2.0</license>
+
+  <!-- Changed to ament_cmake for installing URDF, meshes, etc. -->
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <!-- Keep your existing dependencies -->
   <depend>rclpy</depend>
   <depend>std_msgs</depend>
   <depend>geometry_msgs</depend>
   <depend>trajectory_msgs</depend>
   <depend>control_msgs</depend>
   <depend>sensor_msgs</depend>
+
   <depend>robot_state_publisher</depend>
   <depend>joint_state_publisher</depend>
   <depend>joint_state_publisher_gui</depend>
+
   <depend>gazebo_ros</depend>
-  <depend>gazebo_ros_pkgs</depend>
   <depend>gazebo_ros2_control</depend>
+  <depend>gazebo_ros_pkgs</depend>
+  <depend>rviz2</depend>
+  <depend>moveit_ros_planning_interface</depend>
+  <depend>moveit_py</depend>
+  <exec_depend>moveit_msgs</exec_depend>
+  <exec_depend>moveit_ros_move_group</exec_depend>
+
+
   <depend>controller_manager</depend>
   <depend>joint_trajectory_controller</depend>
-  <depend>position_controllers</depend>
   <depend>joint_state_broadcaster</depend>
-  <depend>rviz2</depend>
+
+  
   <depend>xacro</depend>
   <depend>ur_description</depend>
+  <depend>ur_robot_driver</depend>
+  <depend>robotiq_description</depend>
+
+  <depend>cv_bridge</depend>
+  <exec_depend>vision_opencv</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  
+
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
+
+  <!-- Changed build type to cmake-->
   <export>
-    <build_type>ament_python</build_type>
-    <gazebo_ros gazebo_model_path = "/home/shu/ur5e_task/install/robotiq_description/share/"/>
+    <build_type>ament_cmake</build_type>
   </export>
 </package>
+

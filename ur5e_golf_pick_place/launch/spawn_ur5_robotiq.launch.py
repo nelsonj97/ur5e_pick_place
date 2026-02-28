@@ -1,5 +1,3 @@
-
-
 from launch import LaunchDescription
 from launch.actions import (
     DeclareLaunchArgument,
@@ -154,13 +152,13 @@ def launch_setup(context, *args, **kwargs):
         output="screen",
     )
 
-        # Gripper controller spawner
-    gripper_controller_spawner = Node(
-        package="controller_manager",
-        executable="spawner",
-        arguments=["robotiq_gripper_controller", "-c", "/controller_manager"],
-        output="screen",
-    )
+    # Gripper controller
+    # gripper_controller_spawner = Node(
+    #     package="controller_manager",
+    #     executable="spawner",
+    #     arguments=["gripper_controller", "-c", "/controller_manager"],
+    # )
+    
 
     nodes_to_start = [
         robot_state_publisher_node,
@@ -170,7 +168,7 @@ def launch_setup(context, *args, **kwargs):
         initial_joint_controller_spawner_started,
         gazebo,
         gazebo_spawn_robot,
-        gripper_controller_spawner,
+        # gripper_controller_spawner,
     ]
 
     return nodes_to_start

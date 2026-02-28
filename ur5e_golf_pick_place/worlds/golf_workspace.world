@@ -1,28 +1,31 @@
 <?xml version="1.0" ?>
-
 <sdf version="1.4">
-
   <world name="default">
 
-    <!-- WORLD COMPONENTS: STANDARD -->
+    <!-- Link Attacher Plugin -->
+    <plugin name="gazebo_link_attacher" filename="libgazebo_link_attacher.so"/>
 
+    <!-- World standard components -->
     <gravity>0 0 -9.8</gravity>
 
+    <!-- Ground Plane -->
     <include>
       <uri>model://ground_plane</uri>
     </include>
 
+    <!-- Sun Light -->
     <include>
       <uri>model://sun</uri>
     </include>
 
+    <!-- Scene Settings -->
     <scene>
-      <shadows>0</shadows>
+      <ambient>0.8 0.8 0.8 1</ambient>
+      <background>0.8 0.8 0.8 1</background>
+      <shadows>false</shadows>
     </scene>
 
-    <!-- Link Attacher: GAZEBO PLUGIN -->
-    <plugin name="gazebo_link_attacher" filename="libgazebo_link_attacher.so"/>
-
+    <!-- Robot stand (ORIGINAL HEIGHT) -->
     <model name='robot_stand'>
       <static>true</static>
       <pose>0 0 0.4 0 0 0</pose>
@@ -71,39 +74,26 @@
       </link>
     </model>
     
-    <!-- Target Table 1 (Rotated 90 degrees - now at front) -->
+    <!-- Front table -->
     <model name='target_table_1'>
-      <link name='link'>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-        <pose frame=''>0 0 0 0 -0 0</pose>
-        <gravity>1</gravity>
-        <inertial>
-          <mass>1</mass>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <inertia>
-            <ixx>1</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>1</iyy>
-            <iyz>0</iyz>
-            <izz>1</izz>
-          </inertia>
-        </inertial>
-        <visual name='visual'>
-          <pose frame=''>0 0 0.73 0 -0 1.57</pose>
+      <static>true</static>
+      <pose>0.6 0 0.035 0 0 0</pose>  <!-- ✅ Changed from (0, 0.3, 0) -->
+      <link name='table_link'>
+        <!-- Table top -->
+        <visual name='table_top'>
+          <pose>0 0 0.73 0 0 0</pose>
           <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>file:///home/shu/ros2_ws/src/ros2_SimRealRobotControl/packages/ur5e/ros2srrc_ur5e_gazebo/worlds/target_table/meshes/target_table.dae</uri>
-            </mesh>
+            <box>
+              <size>1.6 0.8 0.06</size>
+            </box>
           </geometry>
+          <material>
+            <ambient>0.8 0.6 0.4 1</ambient>
+            <diffuse>0.8 0.6 0.4 1</diffuse>
+          </material>
         </visual>
-        <collision name='collision_0'>
-          <laser_retro>0</laser_retro>
-          <max_contacts>10</max_contacts>
-          <pose frame=''>0 0 0.73 0 -0 0</pose>
+        <collision name='table_collision'>
+          <pose>0 0 0.73 0 0 0</pose>
           <geometry>
             <box>
               <size>1.6 0.8 0.06</size>
@@ -114,146 +104,112 @@
               <ode>
                 <mu>1</mu>
                 <mu2>1</mu2>
-                <fdir1>0 0 0</fdir1>
-                <slip1>0</slip1>
-                <slip2>0</slip2>
               </ode>
-              <torsional>
-                <coefficient>1</coefficient>
-                <patch_radius>0</patch_radius>
-                <surface_radius>0</surface_radius>
-                <use_patch_radius>1</use_patch_radius>
-                <ode>
-                  <slip>0</slip>
-                </ode>
-              </torsional>
             </friction>
-            <bounce>
-              <restitution_coefficient>0</restitution_coefficient>
-              <threshold>1e+06</threshold>
-            </bounce>
-            <contact>
-              <collide_without_contact>0</collide_without_contact>
-              <collide_without_contact_bitmask>1</collide_without_contact_bitmask>
-              <collide_bitmask>1</collide_bitmask>
-              <ode>
-                <soft_cfm>0</soft_cfm>
-                <soft_erp>0.2</soft_erp>
-                <kp>1e+13</kp>
-                <kd>1</kd>
-                <max_vel>0.01</max_vel>
-                <min_depth>0</min_depth>
-              </ode>
-              <bullet>
-                <split_impulse>1</split_impulse>
-                <split_impulse_penetration_threshold>-0.01</split_impulse_penetration_threshold>
-                <soft_cfm>0</soft_cfm>
-                <soft_erp>0.2</soft_erp>
-                <kp>1e+13</kp>
-                <kd>1</kd>
-              </bullet>
-            </contact>
           </surface>
         </collision>
-      </link>
-      <static>1</static>
-      <allow_auto_disable>1</allow_auto_disable>
-      <pose frame=''>0 0.8 0 0 -0 0</pose>
-    </model>
-
-    <!-- Target Table 2 (Rotated 90 degrees - now at back) -->
-    <model name='target_table_2'>
-      <link name='link'>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-        <pose frame=''>0 0 0 0 -0 0</pose>
-        <gravity>1</gravity>
-        <inertial>
-          <mass>1</mass>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <inertia>
-            <ixx>1</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>1</iyy>
-            <iyz>0</iyz>
-            <izz>1</izz>
-          </inertia>
-        </inertial>
-        <visual name='visual'>
-          <pose frame=''>0 0 0.73 0 -0 1.57</pose>
+        
+        <!-- Leg 1 (front-left) -->
+        <visual name='leg1'>
+          <pose>0.7 0.35 0.365 0 0 0</pose>
           <geometry>
-            <mesh>
-              <scale>1 1 1</scale>
-              <uri>file:///home/shu/ros2_ws/src/ros2_SimRealRobotControl/packages/ur5e/ros2srrc_ur5e_gazebo/worlds/target_table/meshes/target_table.dae</uri>
-            </mesh>
+            <cylinder>
+              <radius>0.03</radius>
+              <length>0.73</length>
+            </cylinder>
           </geometry>
+          <material>
+            <ambient>0.6 0.4 0.2 1</ambient>
+            <diffuse>0.6 0.4 0.2 1</diffuse>
+          </material>
         </visual>
-        <collision name='collision_0'>
-          <laser_retro>0</laser_retro>
-          <max_contacts>10</max_contacts>
-          <pose frame=''>0 0 0.73 0 -0 0</pose>
+        <collision name='leg1_collision'>
+          <pose>0.7 0.35 0.365 0 0 0</pose>
           <geometry>
-            <box>
-              <size>1.6 0.8 0.06</size>
-            </box>
+            <cylinder>
+              <radius>0.03</radius>
+              <length>0.73</length>
+            </cylinder>
           </geometry>
-          <surface>
-            <friction>
-              <ode>
-                <mu>1</mu>
-                <mu2>1</mu2>
-                <fdir1>0 0 0</fdir1>
-                <slip1>0</slip1>
-                <slip2>0</slip2>
-              </ode>
-              <torsional>
-                <coefficient>1</coefficient>
-                <patch_radius>0</patch_radius>
-                <surface_radius>0</surface_radius>
-                <use_patch_radius>1</use_patch_radius>
-                <ode>
-                  <slip>0</slip>
-                </ode>
-              </torsional>
-            </friction>
-            <bounce>
-              <restitution_coefficient>0</restitution_coefficient>
-              <threshold>1e+06</threshold>
-            </bounce>
-            <contact>
-              <collide_without_contact>0</collide_without_contact>
-              <collide_without_contact_bitmask>1</collide_without_contact_bitmask>
-              <collide_bitmask>1</collide_bitmask>
-              <ode>
-                <soft_cfm>0</soft_cfm>
-                <soft_erp>0.2</soft_erp>
-                <kp>1e+13</kp>
-                <kd>1</kd>
-                <max_vel>0.01</max_vel>
-                <min_depth>0</min_depth>
-              </ode>
-              <bullet>
-                <split_impulse>1</split_impulse>
-                <split_impulse_penetration_threshold>-0.01</split_impulse_penetration_threshold>
-                <soft_cfm>0</soft_cfm>
-                <soft_erp>0.2</soft_erp>
-                <kp>1e+13</kp>
-                <kd>1</kd>
-              </bullet>
-            </contact>
-          </surface>
+        </collision>
+        
+        <!-- Leg 2 (front-right) -->
+        <visual name='leg2'>
+          <pose>-0.7 0.35 0.365 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.03</radius>
+              <length>0.73</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.6 0.4 0.2 1</ambient>
+            <diffuse>0.6 0.4 0.2 1</diffuse>
+          </material>
+        </visual>
+        <collision name='leg2_collision'>
+          <pose>-0.7 0.35 0.365 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.03</radius>
+              <length>0.73</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        
+        <!-- Leg 3 (back-left) -->
+        <visual name='leg3'>
+          <pose>0.7 -0.35 0.365 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.03</radius>
+              <length>0.73</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.6 0.4 0.2 1</ambient>
+            <diffuse>0.6 0.4 0.2 1</diffuse>
+          </material>
+        </visual>
+        <collision name='leg3_collision'>
+          <pose>0.7 -0.35 0.365 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.03</radius>
+              <length>0.73</length>
+            </cylinder>
+          </geometry>
+        </collision>
+        
+        <!-- Leg 4 (back-right) -->
+        <visual name='leg4'>
+          <pose>-0.7 -0.35 0.365 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.03</radius>
+              <length>0.73</length>
+            </cylinder>
+          </geometry>
+          <material>
+            <ambient>0.6 0.4 0.2 1</ambient>
+            <diffuse>0.6 0.4 0.2 1</diffuse>
+          </material>
+        </visual>
+        <collision name='leg4_collision'>
+          <pose>-0.7 -0.35 0.365 0 0 0</pose>
+          <geometry>
+            <cylinder>
+              <radius>0.03</radius>
+              <length>0.73</length>
+            </cylinder>
+          </geometry>
         </collision>
       </link>
-      <static>1</static>
-      <allow_auto_disable>1</allow_auto_disable>
-      <pose frame=''>0 -0.8 0 0 -0 3.14159</pose>
     </model>
 
-    <!-- Golf Ball (rotated 90 degrees - now on front table) -->
+    <!-- Golf Ball on Front Table -->
     <model name="golf_ball">
-      <pose>0.3 0.5 0.787 0 0 0</pose>
+      <pose>0.3 0 0.8264 0 0 0</pose>  <!-- ✅ 0.035 + 0.7914 = 0.8264 --> 
       <link name="ball_link">
         <collision name="ball_collision">
           <geometry>
@@ -295,9 +251,9 @@
       </link>
     </model>
 
-    <!-- Target position marker (rotated 90 degrees - now on back table) -->
+    <!-- Green Mark on Front Table -->
     <model name="target_marker">
-      <pose>-0.3 -0.5 0.787 0 0 0</pose>
+      <pose>0.7 0 0.796 0 0 0</pose>  <!-- ✅ 0.035 + 0.761 = 0.796 -->
       <static>true</static>
       <link name="marker_link">
         <visual name="marker_visual">
@@ -323,20 +279,98 @@
       <gravity>0 0 -9.81</gravity>
     </physics>
 
-    <!-- Scene settings -->
-    <scene>
-      <ambient>0.4 0.4 0.4 1</ambient>
-      <background>0.7 0.7 0.7 1</background>
-      <shadows>true</shadows>
-    </scene>
-
     <!-- GUI settings -->
     <gui fullscreen="0">
       <camera name="user_camera">
-        <pose>1.5 1.5 1.5 0 0.5 -2.4</pose>
+        <pose>2.0 2.0 2.0 0 0.5 -2.4</pose>
         <view_controller>orbit</view_controller>
       </camera>
     </gui>
+
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <!-- ✅ OVERHEAD CAMERA: RGB for visualization, Depth for data -->
+    <!-- ═══════════════════════════════════════════════════════════════════════ -->
+    <model name='overhead_camera'>
+      <static>1</static>
+      <!-- Position: Above table center, looking down at 45° angle -->
+      <!-- Table is at y=0.3, camera at y=0.85 (0.55m behind table center) -->
+      <pose>1.2 0 1.8 0 0.785398 3.14159</pose>  <!-- x y z roll pitch yaw -->
+                                                               <!-- <pose>0 0.85 1.59309 -0.243553 0.848459 -1.83055</pose>  <pose>1.0 0 2.0 0 0.785398 3.14159</pose>  -->
+      
+      <link name='camera_link'>
+        <!-- Camera body visual -->
+        <visual name='camera_visual'>
+          <geometry>
+            <box>
+              <size>0.1 0.1 0.05</size>
+            </box>
+          </geometry>
+          <material>
+            <ambient>0 0 1 1</ambient>
+            <diffuse>0 0 1 1</diffuse>
+          </material>
+        </visual>
+        
+        <!-- ✅ RGB Camera: ONLY for ray visualization (NO ROS2 publishing) -->
+        <sensor name="rgb_sensor" type="camera">
+          <always_on>true</always_on>
+          <update_rate>30</update_rate>
+          <visualize>true</visualize>  <!-- ✅ Shows rays in Gazebo -->
+          <camera>
+            <horizontal_fov>1.047</horizontal_fov>  <!-- ✅ Match depth camera FOV -->
+            <image>
+              <width>1280</width>
+              <height>720</height>
+              <format>R8G8B8</format>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>3.0</far>  <!-- ✅ Shorter for cleaner ray visualization -->
+            </clip>
+          </camera>
+          <!-- ✅ NO PLUGIN = No ROS2 topics published -->
+        </sensor>
+
+        <!-- ✅ Depth Camera: For actual data (publishes to ROS2) -->
+        <sensor name='depth_sensor' type='depth'>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <visualize>0</visualize>  <!-- ✅ Don't visualize (RGB already shows rays) -->
+          <camera>
+            <horizontal_fov>1.57</horizontal_fov>
+            <image>
+              <width>1280</width>
+              <height>720</height>
+            </image>
+            <clip>
+              <near>0.1</near>
+              <far>10</far>
+            </clip>
+          </camera>
+          
+          <!-- ✅ Plugin publishes depth data to ROS2 -->
+          <plugin name='camera_plugin' filename='libgazebo_ros_camera.so'>
+            <ros>
+              <namespace>overhead</namespace>
+              <remapping>camera/image_raw:=depth_sensor/image_raw</remapping>
+              <remapping>camera/camera_info:=depth_sensor/camera_info</remapping>
+              <remapping>camera/depth/image_raw:=depth_sensor/depth/image_raw</remapping>
+              <remapping>camera/depth/camera_info:=depth_sensor/depth/camera_info</remapping>
+              <remapping>camera/points:=depth_sensor/points</remapping>
+            </ros>
+            <camera_name>depth_sensor</camera_name>
+            <frame_name>camera_link_optical</frame_name>
+            <hack_baseline>0.07</hack_baseline>
+            <min_depth>0.1</min_depth>
+            <max_depth>10.0</max_depth>
+          </plugin>
+        </sensor>
+        
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
 
   </world>
 </sdf>

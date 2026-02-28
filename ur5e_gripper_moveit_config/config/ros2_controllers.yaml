@@ -30,4 +30,9 @@ joint_trajectory_controller:
       - velocity
 robotiq_gripper_controller:
   ros__parameters:
-    joint: robotiq_85_left_knuckle_joint
+    joint: 
+    - robotiq_85_left_knuckle_joint
+    - robotiq_85_right_knuckle_joint
+    command_interfaces:
+      - position
+      - velocity

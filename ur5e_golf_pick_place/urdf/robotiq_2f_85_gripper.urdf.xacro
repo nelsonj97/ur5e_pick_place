@@ -8,7 +8,16 @@
     <xacro:include filename="$(find robotiq_description)/urdf/robotiq_2f_85_macro.urdf.xacro" />
 
     <link name="world" />
-    <xacro:robotiq_gripper name="RobotiqGripperHardwareInterface" prefix="" parent="tool0" use_fake_hardware="$(arg use_fake_hardware)" com_port="$(arg com_port)">
+    
+    <!-- Dummy tool0 link (for testing; in full setup, this comes from UR5e) -->
+    <link name="tool0" />
+    <joint name="dummy_tool0_joint" type="fixed">
+      <parent link="world"/>
+      <child link="tool0"/>
+    </joint>
+    
+   
+    <xacro:robotiq_gripper name="RobotiqGripperHardwareInterface" prefix="" parent="tool0" use_fake_hardware="${use_fake_hardware}" com_port="${com_port}" sim_gazebo="${sim_gazebo}" include_ros2_control="false" sim_ignition="false" sim_isaac="false">
         <origin xyz="0 0 0" rpy="0 0 0" />
     </xacro:robotiq_gripper>
 </robot>

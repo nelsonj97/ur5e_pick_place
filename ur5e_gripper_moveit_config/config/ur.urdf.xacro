@@ -1,7 +1,4 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="ur">
-
-    <!-- Import ur urdf file -->
-    <xacro:include filename="$(find ur5e_golf_pick_place)/urdf/ur5e_robotiq85.urdf.xacro" />
-
+<robot xmlns:xacro="http://wiki.ros.org/xacro" name="ur">
+  <xacro:include filename="$(find ur5e_golf_pick_place)/urdf/ur5e_robotiq85.urdf.xacro" />
 </robot>

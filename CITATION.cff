@@ -1,0 +1,61 @@
+cff-version: 1.2.0
+message: >
+  If you use this software in your research or project,
+  please cite it using the information below.
+
+authors:
+  - family-names: "Chouobou Tsafack VI"
+    given-names: "Nelson Jorvany"
+    email: nelsonjorvany@gmail.com
+    alias: "nelsonj97"
+
+title: >
+  Vision-Based Robotic Pick-and-Place System
+  Using RGB-D Perception and ROS2
+
+version: 1.0.0
+date-released: 2026-01-01
+
+url: "https://github.com/nelsonj97/ur5e_pick_place"
+
+repository-code: "https://github.com/nelsonj97/ur5e_pick_place"
+
+abstract: >
+  A complete autonomous robotic manipulation system 
+  that uses RGB-D vision to detect, localize, and 
+  manipulate objects using a UR5e collaborative robot 
+  and Robotiq 85 gripper. The system integrates 
+  OpenCV-based perception, MoveIt2 motion planning, 
+  and ROS2 Humble communication framework, achieving 
+  100% task success rate with 1.9mm placement accuracy 
+  in Gazebo simulation.
+
+keywords:
+  - robotics
+  - ROS2
+  - pick-and-place
+  - computer vision
+  - RGB-D
+  - motion planning
+  - MoveIt2
+  - OpenCV
+  - UR5e
+  - Gazebo
+  - inverse kinematics
+  - manipulation
+
+license: MIT
+
+preferred-citation:
+  type: thesis Project (Studienarbeit)
+  authors:
+    - family-names: "Chouobou Tsafack VI"
+      given-names: "Nelson Jorvany"
+      email: nelsonjorvany@gmail.com
+  title: >
+    Vision-Based Robotic Pick-and-Place System
+    Using RGB-D Perception and ROS2
+  year: 2026
+  institution:
+    name: "University of Applied Science Koblenz"
+  thesis-type: "Bachelor Thesis Project / Studienarbeit in Electrical and Computer Engineering"

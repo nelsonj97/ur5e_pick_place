@@ -1,0 +1,28 @@
+# Build files
+build/
+install/
+log/
+__pycache__/
+*.pyc
+*.pyo
+.eggs/
+*.egg-info/
+
+# VSCode
+.vscode/
+*.code-workspace
+
+# ROS2
+*.bag
+*.db3
+
+# Python
+*.pyo
+*.pyc
+.Python
+env/
+venv/
+
+# OS
+.DS_Store
+Thumbs.db
