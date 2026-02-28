@@ -38,22 +38,12 @@ without human intervention.
 - Gripper geometry compensation
 - Robust error handling and recovery
 
-## 📁 Repository Structure
+---
 
-ur5e_golf_pick_place/
-├── ur5e_golf_pick_place/
-│   ├── pick_place_exercise/
-│   │   └── vision_based_pick_and_place.py
-├── launch/
-│   └── golf_pick_place.launch.py
-├── config/
-│   ├── ur5e_controllers.yaml
-│   └── moveit_config.yaml
-├── worlds/
-│   └── golf_pick_place.world
-├── urdf/
-│   └── ur5e_robotiq85.urdf.xacro
-└── README.md
+## 📁 Project Structure
+<img width="524" height="385" alt="Screenshot from 2026-02-28 01-44-16" src="https://github.com/user-attachments/assets/c9c3b36d-ce59-4e9d-a31b-f3c2232fd596" />
+
+---
 
 ## 🚀 Quick Start
 
